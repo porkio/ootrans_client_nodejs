@@ -1,4 +1,4 @@
-module.exports = [
+const langList = [
 	{
 		langName: '中文',
 		code: 'zh-CHS',
@@ -454,3 +454,5 @@ module.exports = [
 		langName: '',
 	},
 ]
+
+export default langList
