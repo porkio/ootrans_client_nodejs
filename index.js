@@ -1,14 +1,14 @@
-import process from 'process'
-import colors from 'colors'
-import open from 'open'
-import axios from 'axios'
+const process = require('process')
+const colors = require('colors')
+// import open from 'open'
+const axios = require('axios')
 
-import player from 'sound-play'
+const player = require('sound-play')
 
-import downloadMp3 from './DownloadFile.js'
+const downloadMp3 = require('./DownloadFile')
 
-import RequestArgs from './RequestArgs.js'
-import ShellCommand from './ShellCommand.js'
+const RequestArgs = require('./RequestArgs')
+const ShellCommand = require('./ShellCommand')
 // console.log(process.argv)
 
 const shellCommand = new ShellCommand(process.argv)
@@ -42,7 +42,8 @@ const request_args = new RequestArgs(process.argv)
 axios
 	.post('http://trans.ppwq.work/translate', request_args)
 	.then(async (res) => {
-		if (res.status === 200) {
+		// console.log(res)
+		if (res.status === 200 && res.data.data.errorCode == 0) {
 			// console.log(res.data)
 			let data = res.data.data
 			// console.log(data)
@@ -53,14 +54,15 @@ axios
 
 // 向命令行输出结果
 async function outputTranslateResult(data) {
-	const webdictUrl = data.webdict.url // web 中查看结果
+	// console.log(data)
+	// const webdictUrl = data.webdict?.url // web 中查看结果
 	const speakTargetLanguageUrl = data.tSpeakUrl // 播放结果音频
 	const speakOriginLanguageUrl = data.speakUrl // 播放源语言音频
 	const translation = data.translation // 翻译结果 Array
 
-	if (typeof webdictUrl != 'undefined' && shellCommand.viewInWeb) {
-		open(webdictUrl)
-	}
+	// if (typeof webdictUrl != 'undefined' && shellCommand.viewInWeb) {
+	// 	open(webdictUrl)
+	// }
 
 	const basic = {}
 
@@ -87,9 +89,9 @@ async function outputTranslateResult(data) {
 		}
 
 		if (typeof url != 'undefined') {
-			console.log('\n url: ', url)
+			// console.log('\n url: ', url)
 			const tempFilePath = await downloadMp3(url)
-			console.log('tempFilePath: ', tempFilePath)
+			// console.log('tempFilePath: ', tempFilePath)
 			tempFilePath != null &&
 				player.play(tempFilePath).then(() => {
 					// TO DO
@@ -108,13 +110,10 @@ async function outputTranslateResult(data) {
 		}
 	}
 
-	console.log('\n')
-
 	if (translation.length > 0) {
 		for (let i = 0; i < translation.length; i++) {
 			console.log(colors.yellow(translation[i]))
 		}
-		console.log('\n')
 
 		typeof phonetic != 'undefined' && console.log(`(${phonetic})`)
 	}

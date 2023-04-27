@@ -1,7 +1,6 @@
 {
 	"name": "ootrans",
 	"version": "1.0.0",
-	"type": "module",
 	"description": "",
 	"main": "index.js",
 	"scripts": {
@@ -17,5 +16,12 @@
 		"download": "^8.0.0",
 		"open": "^9.1.0",
 		"sound-play": "^1.1.0"
-	}
+	},
+	"pkg": {
+		"assets": [
+			"tmp/**/*",
+			"node_modules/**/*"
+		]
+	},
+	"bin": "index.js"
 }

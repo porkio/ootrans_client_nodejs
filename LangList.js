@@ -455,4 +455,4 @@ const langList = [
 	},
 ]
 
-export default langList
+module.exports = langList

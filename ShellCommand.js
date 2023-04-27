@@ -16,4 +16,4 @@ class ShellCommand {
 	}
 }
 
-export default ShellCommand
+module.exports = ShellCommand

@@ -1,8 +1,8 @@
-import langList from './LangList.js'
 // 是否包含某种语言代码
 function isContain(code) {
 	// console.log('isContain: ', code)
-	state = false
+	const langList = require('./LangList')
+	let state = false
 	for (let i = 0; i < langList.length; i++) {
 		if (
 			typeof langList[i].code === 'string' &&
@@ -64,7 +64,7 @@ class RequestArgs {
 				} else {
 					s = tmp.slice(tmp.indexOf(':') + 1, undefined)
 				}
-				console.log('to: ', s)
+				// console.log('to: ', s)
 				return isContain(s) ? s : ''
 			case 'from':
 				if (tmp.indexOf(':') === 0) {
@@ -94,4 +94,4 @@ class RequestArgs {
 	}
 }
 
-export default RequestArgs
+module.exports = RequestArgs
