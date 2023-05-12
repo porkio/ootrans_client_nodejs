@@ -1,5 +1,5 @@
 node_modules/
-tmp/
+audiosTmp/
 dist/
 package-lock.json
 .DS_Store
